@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     cato = {
-      source = "registry.terraform.io/catonetworks/cato"
+      source = "catonetworks/cato"
     }
     azurerm = {
       source  = "hashicorp/azurerm"
