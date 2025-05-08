@@ -10,3 +10,9 @@
 
 ### Features
 - Updated names of outputs
+
+## 0.0.3 (2025-05-07)
+
+### Features
+- Removed nested azure provider, and made creation of resource group optional
+- Added optional license resource and inputs used for commercial site deployments

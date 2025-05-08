@@ -13,8 +13,7 @@ output "mgmt_nic_association_id" { value = azurerm_network_interface_security_gr
 output "wan_nic_association_id" { value = azurerm_network_interface_security_group_association.wan-nic-association.id }
 output "mgmt_public_ip_id" { value = azurerm_public_ip.mgmt-public-ip.id }
 output "wan_public_ip_id" { value = azurerm_public_ip.wan-public-ip.id }
-output "resource_group_id" { value = azurerm_resource_group.azure-rg.id }
-output "resource_group_name" { value = azurerm_resource_group.azure-rg.name }
+output "resource_group_name" { value = var.resource_group_name == null ? azurerm_resource_group.azure-rg[0].name : var.resource_group_name }
 output "private_rt_id" { value = azurerm_route_table.private-rt.id }
 output "public_rt_id" { value = azurerm_route_table.public-rt.id }
 output "lan_route_id" { value = azurerm_route.lan-route.id }
@@ -29,3 +28,4 @@ output "wan_rt_association_id" { value = azurerm_subnet_route_table_association.
 output "dns_servers_id" { value = azurerm_virtual_network_dns_servers.dns_servers.id }
 output "socket_site_id" { value = module.vsocket-azure.socket_site_id }
 output "socket_site_serial" { value = module.vsocket-azure.socket_site_serial }
+output "cato_license_site" { value = var.license_id == null ? null : module.vsocket-azure.cato_license }
