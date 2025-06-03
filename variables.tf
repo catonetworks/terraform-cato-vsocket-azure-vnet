@@ -61,7 +61,7 @@ variable "site_description" {
 variable "site_type" {
   description = "The type of the site"
   type        = string
-  default     = "DATACENTER"
+  default     = "CLOUD_DC"
   validation {
     condition     = contains(["DATACENTER", "BRANCH", "CLOUD_DC", "HEADQUARTERS"], var.site_type)
     error_message = "The site_type variable must be one of 'DATACENTER','BRANCH','CLOUD_DC','HEADQUARTERS'."
@@ -103,7 +103,6 @@ variable "lan_ip" {
 variable "az_location" {
   type        = string
   description = "(Required) The Azure Region where the Resource Group should exist. Changing this forces a new Resource Group to be created."
-  default     = null
 }
 
 variable "image_reference_id" {
@@ -127,5 +126,11 @@ variable "license_id" {
 variable "license_bw" {
   description = "The license bandwidth number for the cato site, specifying bandwidth ONLY applies for pooled licenses.  For a standard site license that is not pooled, leave this value null. Must be a number greater than 0 and an increment of 10."
   type        = string
+  default     = null
+}
+
+variable "tags" {
+  description = "A Map of Keys and Values to Describe the infrastructure"
+  type        = map(any)
   default     = null
 }
