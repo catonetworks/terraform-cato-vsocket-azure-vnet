@@ -16,3 +16,19 @@
 ### Features
 - Removed nested azure provider, and made creation of resource group optional
 - Added optional license resource and inputs used for commercial site deployments
+
+## 0.0.4 (2025-06-03)
+
+### Features
+- Adjusted items sent to vSocket Module due to Module Changes 
+  - nic_id becomes nic_name
+  - resource group becomes conditional based on whether information is passed 
+- Bumped AzureRM Provider Version to 4.31 from 4.1 
+- Added Tags Arguement (Optional)
+- Updated Depends_On for vSocket Module Call
+- Updated az_location to be required
+- Requires Module Version 0.1.1 of vSocket Module
+- Added Security Rules to the LAN, MGMT, and WAN Security Groups 
+- Moved ResourceGroup name manipulation to Locals to Clean up Code 
+- Changed default Site Type to CLOUD_DC
+- Updated Example in README to include required Variables
