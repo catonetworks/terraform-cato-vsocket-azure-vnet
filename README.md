@@ -119,7 +119,7 @@ Apache 2 Licensed. See [LICENSE](https://github.com/catonetworks/terraform-cato-
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_vsocket-azure"></a> [vsocket-azure](#module\_vsocket-azure) | ../terraform-cato-vsocket-azure | n/a |
+| <a name="module_vsocket-azure"></a> [vsocket-azure](#module\_vsocket-azure) | catonetworks/vsocket-azure/cato | n/a |
 
 ## Resources
 

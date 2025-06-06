@@ -32,3 +32,8 @@
 - Moved ResourceGroup name manipulation to Locals to Clean up Code 
 - Changed default Site Type to CLOUD_DC
 - Updated Example in README to include required Variables
+
+## 0.0.5 (2025-06-06)
+
+### Features
+- Adjusted Module Call
