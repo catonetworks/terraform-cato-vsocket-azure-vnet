@@ -37,3 +37,10 @@
 
 ### Features
 - Adjusted Module Call
+
+## 0.0.6 (2025-07-17)
+
+### Features 
+- Update Module to dynamically resolve SiteLocation from Azure Location / Region 
+- Version locked Cato provider to v0.0.30 or Greater 
+- Version locked Terraform to v1.5 or Greater 
