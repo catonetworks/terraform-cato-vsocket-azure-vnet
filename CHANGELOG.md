@@ -44,3 +44,8 @@
 - Update Module to dynamically resolve SiteLocation from Azure Location / Region 
 - Version locked Cato provider to v0.0.30 or Greater 
 - Version locked Terraform to v1.5 or Greater 
+
+## 0.0.7 (2025-07-17)
+
+### Features 
+ - fix malformed site_location.tf
