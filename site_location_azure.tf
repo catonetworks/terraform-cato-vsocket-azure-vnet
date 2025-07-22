@@ -23,7 +23,7 @@ data "cato_siteLocation" "site_location" {
 }
 
 locals {
- ## Check for all site_location inputs to be null
+  ## Check for all site_location inputs to be null
   all_location_fields_null = (
     var.site_location.city == null &&
     var.site_location.country_code == null &&

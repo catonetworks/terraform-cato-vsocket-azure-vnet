@@ -49,3 +49,10 @@
 
 ### Features 
  - fix malformed site_location.tf
+
+## 0.0.8 (2025-07-22)
+- Update Sitelocation with Switzerland & Poland
+- Update Module to Enable Bandwidth to be set on WAN Interface 
+- Add Support for Network_Routed_Range 
+- Add Support for Static Range Translation
+- Update Version Locks 
