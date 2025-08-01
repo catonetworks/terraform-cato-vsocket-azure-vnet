@@ -437,6 +437,7 @@ resource "azurerm_subnet_route_table_association" "rt-table-association-lan" {
 # ## Create Cato SocketSite and Deploy Vsocket
 module "vsocket-azure" {
   source                          = "catonetworks/vsocket-azure/cato"
+  version                         = ">=0.1.6"
   native_network_range            = var.vnet_prefix
   lan_ip                          = var.lan_ip
   location                        = var.az_location
@@ -453,7 +454,6 @@ module "vsocket-azure" {
   upstream_bandwidth              = var.upstream_bandwidth
   downstream_bandwidth            = var.downstream_bandwidth
   routed_networks                 = var.routed_networks
-  routed_ranges_gateway           = var.routed_ranges_gateway
   enable_static_range_translation = var.enable_static_range_translation
   depends_on                      = [azurerm_network_interface.lan-nic, azurerm_network_interface.mgmt-nic, azurerm_network_interface.wan-nic]
   tags                            = var.tags
