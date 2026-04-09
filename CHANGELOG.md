@@ -56,3 +56,8 @@
 - Add Support for Network_Routed_Range 
 - Add Support for Static Range Translation
 - Update Version Locks 
+
+## 0.0.9 (2025-07-17)
+
+### Features 
+ - Updated security groups to be configurable

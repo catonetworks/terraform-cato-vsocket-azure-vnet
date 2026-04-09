@@ -179,65 +179,21 @@ resource "azurerm_network_security_group" "mgmt-sg" {
   name                = replace(replace("${var.site_name}-MGMTSecurityGroup", "-", "_"), " ", "_")
   resource_group_name = local.effective_rg_name
 
-  security_rule {
-    name                       = "Allow-DNS-TCP"
-    priority                   = 100
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "53"
-    source_address_prefix      = "*"
-    destination_address_prefix = "Internet"
+  dynamic "security_rule" {
+    for_each = var.mgmt_sg_rules
+    content {
+      name                       = security_rule.value.name
+      priority                   = security_rule.value.priority
+      direction                  = security_rule.value.direction
+      access                     = security_rule.value.access
+      protocol                   = security_rule.value.protocol
+      source_port_range          = security_rule.value.source_port_range
+      destination_port_range     = security_rule.value.destination_port_range
+      source_address_prefix      = security_rule.value.source_address_prefix
+      destination_address_prefix = security_rule.value.destination_address_prefix
+    }
   }
 
-  security_rule {
-    name                       = "Allow-DNS-UDP"
-    priority                   = 110
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Udp"
-    source_port_range          = "*"
-    destination_port_range     = "53"
-    source_address_prefix      = "*"
-    destination_address_prefix = "Internet"
-  }
-
-  security_rule {
-    name                       = "Allow-HTTPS-TCP"
-    priority                   = 120
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefix      = "*"
-    destination_address_prefix = "Internet"
-  }
-
-  security_rule {
-    name                       = "Allow-HTTPS-UDP"
-    priority                   = 130
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Udp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefix      = "*"
-    destination_address_prefix = "Internet"
-  }
-
-  security_rule {
-    name                       = "Deny-All-Outbound"
-    priority                   = 4096
-    direction                  = "Outbound"
-    access                     = "Deny"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
   depends_on = [
     azurerm_resource_group.azure-rg
   ]
@@ -248,64 +204,19 @@ resource "azurerm_network_security_group" "wan-sg" {
   name                = replace(replace("${var.site_name}-WANSecurityGroup", "-", "_"), " ", "_")
   resource_group_name = local.effective_rg_name
 
-  security_rule {
-    name                       = "Allow-DNS-TCP"
-    priority                   = 100
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "53"
-    source_address_prefix      = "*"
-    destination_address_prefix = "Internet"
-  }
-
-  security_rule {
-    name                       = "Allow-DNS-UDP"
-    priority                   = 110
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Udp"
-    source_port_range          = "*"
-    destination_port_range     = "53"
-    source_address_prefix      = "*"
-    destination_address_prefix = "Internet"
-  }
-
-  security_rule {
-    name                       = "Allow-HTTPS-TCP"
-    priority                   = 120
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefix      = "*"
-    destination_address_prefix = "Internet"
-  }
-
-  security_rule {
-    name                       = "Allow-HTTPS-UDP"
-    priority                   = 130
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Udp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefix      = "*"
-    destination_address_prefix = "Internet"
-  }
-
-  security_rule {
-    name                       = "Deny-All-Outbound"
-    priority                   = 4096
-    direction                  = "Outbound"
-    access                     = "Deny"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
+  dynamic "security_rule" {
+    for_each = var.wan_sg_rules
+    content {
+      name                       = security_rule.value.name
+      priority                   = security_rule.value.priority
+      direction                  = security_rule.value.direction
+      access                     = security_rule.value.access
+      protocol                   = security_rule.value.protocol
+      source_port_range          = security_rule.value.source_port_range
+      destination_port_range     = security_rule.value.destination_port_range
+      source_address_prefix      = security_rule.value.source_address_prefix
+      destination_address_prefix = security_rule.value.destination_address_prefix
+    }
   }
 
   depends_on = [
@@ -319,30 +230,20 @@ resource "azurerm_network_security_group" "lan-sg" {
   name                = replace(replace("${var.site_name}-LANSecurityGroup", "-", "_"), " ", "_")
   resource_group_name = local.effective_rg_name
 
-  security_rule {
-    name                       = "Allow-All-Inbound"
-    priority                   = 100
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
+  dynamic "security_rule" {
+    for_each = var.lan_sg_rules
+    content {
+      name                       = security_rule.value.name
+      priority                   = security_rule.value.priority
+      direction                  = security_rule.value.direction
+      access                     = security_rule.value.access
+      protocol                   = security_rule.value.protocol
+      source_port_range          = security_rule.value.source_port_range
+      destination_port_range     = security_rule.value.destination_port_range
+      source_address_prefix      = security_rule.value.source_address_prefix
+      destination_address_prefix = security_rule.value.destination_address_prefix
+    }
   }
-
-  security_rule {
-    name                       = "Allow-All-Outbound"
-    priority                   = 100
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-
 
   depends_on = [
     azurerm_resource_group.azure-rg
@@ -453,7 +354,6 @@ module "vsocket-azure" {
   upstream_bandwidth              = var.upstream_bandwidth
   downstream_bandwidth            = var.downstream_bandwidth
   routed_networks                 = var.routed_networks
-  routed_ranges_gateway           = var.routed_ranges_gateway
   enable_static_range_translation = var.enable_static_range_translation
   depends_on                      = [azurerm_network_interface.lan-nic, azurerm_network_interface.mgmt-nic, azurerm_network_interface.wan-nic]
   tags                            = var.tags
