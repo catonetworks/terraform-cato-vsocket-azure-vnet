@@ -57,7 +57,14 @@
 - Add Support for Static Range Translation
 - Update Version Locks 
 
-## 0.0.9 (2025-07-17)
+## 0.0.9 (2025-08-01)
+
+### Features
+ - Updated to use latest provider version 
+  - Adjusted routed_networks call to include interface_index 
+ - Version Lock to Provider version 0.0.38 or greater
+
+## 0.0.10 (2026-04-09)
 
 ### Features 
  - Updated security groups to be configurable

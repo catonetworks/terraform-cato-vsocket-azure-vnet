@@ -338,6 +338,7 @@ resource "azurerm_subnet_route_table_association" "rt-table-association-lan" {
 # ## Create Cato SocketSite and Deploy Vsocket
 module "vsocket-azure" {
   source                          = "catonetworks/vsocket-azure/cato"
+  version                         = ">=0.1.6"
   native_network_range            = var.vnet_prefix
   lan_ip                          = var.lan_ip
   location                        = var.az_location
