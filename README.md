@@ -36,6 +36,18 @@ Reference the resources as input variables with the following syntax:
 ## Usage
 
 ```hcl
+terraform {
+  required_providers {
+    cato = {
+      source = "catonetworks/cato"
+    }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.33"
+    }
+  }
+}
+
 provider "azurerm" {
   subscription_id = var.azure_subscription_id
   features {}

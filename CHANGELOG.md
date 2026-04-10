@@ -64,7 +64,8 @@
   - Adjusted routed_networks call to include interface_index 
  - Version Lock to Provider version 0.0.38 or greater
 
-## 0.0.10 (2026-04-09)
+## 0.0.11 (2026-04-09)
 
 ### Features 
  - Updated security groups to be configurable
+ - Updated readme
