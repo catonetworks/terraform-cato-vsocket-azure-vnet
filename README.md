@@ -39,7 +39,8 @@ Reference the resources as input variables with the following syntax:
 terraform {
   required_providers {
     cato = {
-      source = "catonetworks/cato"
+      source  = "catonetworks/cato"
+      version = ">= 0.0.70"
     }
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -110,8 +111,8 @@ For more information on site_location syntax, use the [Cato CLI](https://github.
 
 ```bash
 $ pip3 install catocli
-$ export CATO_TOKEN="your-api-token-here"
-$ export CATO_ACCOUNT_ID="your-account-id"
+$ export TF_VAR_CATO_TOKEN="your-api-token-here"
+$ export TF_VAR_CATO_ACCOUNT_ID="your-account-id"
 $ catocli query siteLocation -h
 $ catocli query siteLocation '{"filters":[{"search": "San Diego","field":"city","operation":"exact"}]}' -p
 ```
@@ -134,28 +135,28 @@ Apache 2 Licensed. See [LICENSE](https://github.com/catonetworks/terraform-cato-
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4.31.0 |
-| <a name="requirement_cato"></a> [cato](#requirement\_cato) | >= 0.0.38 |
+| <a name="requirement_cato"></a> [cato](#requirement\_cato) | >= 0.0.70 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4.31.0 |
-| <a name="provider_cato"></a> [cato](#provider\_cato) | >= 0.0.38 |
+| <a name="provider_cato"></a> [cato](#provider\_cato) | >= 0.0.70 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_vsocket-azure"></a> [vsocket-azure](#module\_vsocket-azure) | catonetworks/vsocket-azure/cato | >=0.1.6 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [azurerm_availability_set.availability-set](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/availability_set) | resource |
 | [azurerm_network_interface.lan-nic](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
 | [azurerm_network_interface.mgmt-nic](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
@@ -187,7 +188,7 @@ Apache 2 Licensed. See [LICENSE](https://github.com/catonetworks/terraform-cato-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_az_location"></a> [az\_location](#input\_az\_location) | (Required) The Azure Region where the Resource Group should exist. Changing this forces a new Resource Group to be created. | `string` | n/a | yes |
 | <a name="input_disk_size_gb"></a> [disk\_size\_gb](#input\_disk\_size\_gb) | Disk size in GB | `number` | `8` | no |
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | n/a | `list(string)` | <pre>[<br/>  "10.254.254.1",<br/>  "168.63.129.16",<br/>  "1.1.1.1",<br/>  "8.8.8.8"<br/>]</pre> | no |
@@ -195,8 +196,10 @@ Apache 2 Licensed. See [LICENSE](https://github.com/catonetworks/terraform-cato-
 | <a name="input_enable_static_range_translation"></a> [enable\_static\_range\_translation](#input\_enable\_static\_range\_translation) | Enables the ability to use translated ranges | `string` | `false` | no |
 | <a name="input_image_reference_id"></a> [image\_reference\_id](#input\_image\_reference\_id) | Path to image used to deploy specific version of the virutal socket | `string` | `"/Subscriptions/38b5ec1d-b3b6-4f50-a34e-f04a67121955/Providers/Microsoft.Compute/Locations/eastus/Publishers/catonetworks/ArtifactTypes/VMImage/Offers/cato_socket/Skus/public-cato-socket/Versions/19.0.17805"` | no |
 | <a name="input_lan_ip"></a> [lan\_ip](#input\_lan\_ip) | Local IP Address of socket LAN interface | `string` | `null` | no |
+| <a name="input_lan_sg_rules"></a> [lan\_sg\_rules](#input\_lan\_sg\_rules) | Security rules for the LAN Network Security Group | <pre>list(object({<br/>    name                       = string<br/>    priority                   = number<br/>    direction                  = string<br/>    access                     = string<br/>    protocol                   = string<br/>    source_port_range          = string<br/>    destination_port_range     = string<br/>    source_address_prefix      = string<br/>    destination_address_prefix = string<br/>  }))</pre> | <pre>[<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "*",<br/>    "destination_port_range": "*",<br/>    "direction": "Inbound",<br/>    "name": "Allow-RFC1918-10-Inbound",<br/>    "priority": 100,<br/>    "protocol": "*",<br/>    "source_address_prefix": "10.0.0.0/8",<br/>    "source_port_range": "*"<br/>  },<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "*",<br/>    "destination_port_range": "*",<br/>    "direction": "Inbound",<br/>    "name": "Allow-RFC1918-172-Inbound",<br/>    "priority": 110,<br/>    "protocol": "*",<br/>    "source_address_prefix": "172.16.0.0/12",<br/>    "source_port_range": "*"<br/>  },<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "*",<br/>    "destination_port_range": "*",<br/>    "direction": "Inbound",<br/>    "name": "Allow-RFC1918-192-Inbound",<br/>    "priority": 120,<br/>    "protocol": "*",<br/>    "source_address_prefix": "192.168.0.0/16",<br/>    "source_port_range": "*"<br/>  },<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "*",<br/>    "destination_port_range": "*",<br/>    "direction": "Outbound",<br/>    "name": "Allow-All-Outbound",<br/>    "priority": 100,<br/>    "protocol": "*",<br/>    "source_address_prefix": "*",<br/>    "source_port_range": "*"<br/>  }<br/>]</pre> | no |
 | <a name="input_license_bw"></a> [license\_bw](#input\_license\_bw) | The license bandwidth number for the cato site, specifying bandwidth ONLY applies for pooled licenses.  For a standard site license that is not pooled, leave this value null. Must be a number greater than 0 and an increment of 10. | `string` | `null` | no |
 | <a name="input_license_id"></a> [license\_id](#input\_license\_id) | The license ID for the Cato vSocket of license type CATO\_SITE, CATO\_SSE\_SITE, CATO\_PB, CATO\_PB\_SSE.  Example License ID value: 'abcde123-abcd-1234-abcd-abcde1234567'.  Note that licenses are for commercial accounts, and not supported for trial accounts. | `string` | `null` | no |
+| <a name="input_mgmt_sg_rules"></a> [mgmt\_sg\_rules](#input\_mgmt\_sg\_rules) | Security rules for the Management Network Security Group | <pre>list(object({<br/>    name                       = string<br/>    priority                   = number<br/>    direction                  = string<br/>    access                     = string<br/>    protocol                   = string<br/>    source_port_range          = string<br/>    destination_port_range     = string<br/>    source_address_prefix      = string<br/>    destination_address_prefix = string<br/>  }))</pre> | <pre>[<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "Internet",<br/>    "destination_port_range": "53",<br/>    "direction": "Outbound",<br/>    "name": "Allow-DNS-TCP",<br/>    "priority": 100,<br/>    "protocol": "Tcp",<br/>    "source_address_prefix": "*",<br/>    "source_port_range": "*"<br/>  },<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "Internet",<br/>    "destination_port_range": "53",<br/>    "direction": "Outbound",<br/>    "name": "Allow-DNS-UDP",<br/>    "priority": 110,<br/>    "protocol": "Udp",<br/>    "source_address_prefix": "*",<br/>    "source_port_range": "*"<br/>  },<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "Internet",<br/>    "destination_port_range": "443",<br/>    "direction": "Outbound",<br/>    "name": "Allow-HTTPS-TCP",<br/>    "priority": 120,<br/>    "protocol": "Tcp",<br/>    "source_address_prefix": "*",<br/>    "source_port_range": "*"<br/>  },<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "Internet",<br/>    "destination_port_range": "443",<br/>    "direction": "Outbound",<br/>    "name": "Allow-HTTPS-UDP",<br/>    "priority": 130,<br/>    "protocol": "Udp",<br/>    "source_address_prefix": "*",<br/>    "source_port_range": "*"<br/>  },<br/>  {<br/>    "access": "Deny",<br/>    "destination_address_prefix": "*",<br/>    "destination_port_range": "*",<br/>    "direction": "Outbound",<br/>    "name": "Deny-All-Outbound",<br/>    "priority": 4096,<br/>    "protocol": "*",<br/>    "source_address_prefix": "*",<br/>    "source_port_range": "*"<br/>  }<br/>]</pre> | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Azure resource group name | `string` | `null` | no |
 | <a name="input_routed_networks"></a> [routed\_networks](#input\_routed\_networks) | A map of routed networks to be accessed behind the vSocket site.<br/>  - The key is the logical name for the network.<br/>  - The value is an object containing:<br/>    - "subnet" (string, required): The actual CIDR range of the network.<br/>    - "translated\_subnet" (string, optional): The NATed CIDR range if translation is used.<br/>  Example: <br/>  routed\_networks = {<br/>    "Peered-VNET-1" = {<br/>      subnet = "10.100.1.0/24"<br/>    }<br/>    "On-Prem-Network-NAT" = {<br/>      subnet            = "192.168.51.0/24"<br/>      translated\_subnet = "10.200.1.0/24"<br/>    }<br/>  } | <pre>map(object({<br/>    subnet            = string<br/>    translated_subnet = optional(string)<br/>    gateway           = optional(string)<br/>    interface_index   = optional(string, "LAN1")<br/>  }))</pre> | `{}` | no |
 | <a name="input_site_description"></a> [site\_description](#input\_site\_description) | Site description | `string` | n/a | yes |
@@ -210,11 +213,12 @@ Apache 2 Licensed. See [LICENSE](https://github.com/catonetworks/terraform-cato-
 | <a name="input_upstream_bandwidth"></a> [upstream\_bandwidth](#input\_upstream\_bandwidth) | Sockets upstream interface WAN Bandwidth in Mbps | `number` | `null` | no |
 | <a name="input_vm_size"></a> [vm\_size](#input\_vm\_size) | (Required) Specifies the size of the Virtual Machine. See also Azure VM Naming Conventions. https://learn.microsoft.com/en-us/azure/virtual-machines/vm-naming-conventions | `string` | `"Standard_D8ls_v5"` | no |
 | <a name="input_vnet_prefix"></a> [vnet\_prefix](#input\_vnet\_prefix) | Choose a unique range for your new VPC that does not conflict with the rest of your Wide Area Network.<br/>    The accepted input format is Standard CIDR Notation, e.g. X.X.X.X/X | `string` | n/a | yes |
+| <a name="input_wan_sg_rules"></a> [wan\_sg\_rules](#input\_wan\_sg\_rules) | Security rules for the WAN Network Security Group | <pre>list(object({<br/>    name                       = string<br/>    priority                   = number<br/>    direction                  = string<br/>    access                     = string<br/>    protocol                   = string<br/>    source_port_range          = string<br/>    destination_port_range     = string<br/>    source_address_prefix      = string<br/>    destination_address_prefix = string<br/>  }))</pre> | <pre>[<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "Internet",<br/>    "destination_port_range": "53",<br/>    "direction": "Outbound",<br/>    "name": "Allow-DNS-TCP",<br/>    "priority": 100,<br/>    "protocol": "Tcp",<br/>    "source_address_prefix": "*",<br/>    "source_port_range": "*"<br/>  },<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "Internet",<br/>    "destination_port_range": "53",<br/>    "direction": "Outbound",<br/>    "name": "Allow-DNS-UDP",<br/>    "priority": 110,<br/>    "protocol": "Udp",<br/>    "source_address_prefix": "*",<br/>    "source_port_range": "*"<br/>  },<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "Internet",<br/>    "destination_port_range": "443",<br/>    "direction": "Outbound",<br/>    "name": "Allow-HTTPS-TCP",<br/>    "priority": 120,<br/>    "protocol": "Tcp",<br/>    "source_address_prefix": "*",<br/>    "source_port_range": "*"<br/>  },<br/>  {<br/>    "access": "Allow",<br/>    "destination_address_prefix": "Internet",<br/>    "destination_port_range": "443",<br/>    "direction": "Outbound",<br/>    "name": "Allow-HTTPS-UDP",<br/>    "priority": 130,<br/>    "protocol": "Udp",<br/>    "source_address_prefix": "*",<br/>    "source_port_range": "*"<br/>  },<br/>  {<br/>    "access": "Deny",<br/>    "destination_address_prefix": "*",<br/>    "destination_port_range": "*",<br/>    "direction": "Outbound",<br/>    "name": "Deny-All-Outbound",<br/>    "priority": 4096,<br/>    "protocol": "*",<br/>    "source_address_prefix": "*",<br/>    "source_port_range": "*"<br/>  }<br/>]</pre> | no |
 
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_azurerm_availability_set"></a> [azurerm\_availability\_set](#output\_azurerm\_availability\_set) | n/a |
 | <a name="output_azurerm_route_id"></a> [azurerm\_route\_id](#output\_azurerm\_route\_id) | n/a |
 | <a name="output_azurerm_virtual_network_id"></a> [azurerm\_virtual\_network\_id](#output\_azurerm\_virtual\_network\_id) | n/a |
