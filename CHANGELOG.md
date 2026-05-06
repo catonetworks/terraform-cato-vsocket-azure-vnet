@@ -1,21 +1,47 @@
 # Changelog
 
-## 0.0.1 (2024-11-12)
+## 0.0.12 (2026-05-06)
+
+### Changed
+- Updated AzureRM to 4.71.0
+
+## 0.0.11 (2026-04-09)
+
+### Features 
+ - Updated security groups to be configurable
+ - Updated readme
+
+## 0.0.9 (2025-08-01)
 
 ### Features
-- Initial commit with single socket instance with 3 NICs creating vull vnet
-- Added default vales for required parameters
+ - Updated to use latest provider version 
+  - Adjusted routed_networks call to include interface_index 
+ - Version Lock to Provider version 0.0.38 or greater
 
-## 0.0.2 (2024-11-15)
+## 0.0.8 (2025-07-22)
+
+- Update Sitelocation with Switzerland & Poland
+- Update Module to Enable Bandwidth to be set on WAN Interface 
+- Add Support for Network_Routed_Range 
+- Add Support for Static Range Translation
+- Update Version Locks
+
+## 0.0.7 (2025-07-17)
+
+### Features 
+ - fix malformed site_location.tf
+
+## 0.0.6 (2025-07-17)
+
+### Features 
+- Update Module to dynamically resolve SiteLocation from Azure Location / Region 
+- Version locked Cato provider to v0.0.30 or Greater 
+- Version locked Terraform to v1.5 or Greater
+
+## 0.0.5 (2025-06-06)
 
 ### Features
-- Updated names of outputs
-
-## 0.0.3 (2025-05-07)
-
-### Features
-- Removed nested azure provider, and made creation of resource group optional
-- Added optional license resource and inputs used for commercial site deployments
+- Adjusted Module Call
 
 ## 0.0.4 (2025-06-03)
 
@@ -33,39 +59,19 @@
 - Changed default Site Type to CLOUD_DC
 - Updated Example in README to include required Variables
 
-## 0.0.5 (2025-06-06)
+## 0.0.3 (2025-05-07)
 
 ### Features
-- Adjusted Module Call
+- Removed nested azure provider, and made creation of resource group optional
+- Added optional license resource and inputs used for commercial site deployments
 
-## 0.0.6 (2025-07-17)
-
-### Features 
-- Update Module to dynamically resolve SiteLocation from Azure Location / Region 
-- Version locked Cato provider to v0.0.30 or Greater 
-- Version locked Terraform to v1.5 or Greater 
-
-## 0.0.7 (2025-07-17)
-
-### Features 
- - fix malformed site_location.tf
-
-## 0.0.8 (2025-07-22)
-- Update Sitelocation with Switzerland & Poland
-- Update Module to Enable Bandwidth to be set on WAN Interface 
-- Add Support for Network_Routed_Range 
-- Add Support for Static Range Translation
-- Update Version Locks 
-
-## 0.0.9 (2025-08-01)
+## 0.0.2 (2024-11-15)
 
 ### Features
- - Updated to use latest provider version 
-  - Adjusted routed_networks call to include interface_index 
- - Version Lock to Provider version 0.0.38 or greater
+- Updated names of outputs
 
-## 0.0.11 (2026-04-09)
+## 0.0.1 (2024-11-12)
 
-### Features 
- - Updated security groups to be configurable
- - Updated readme
+### Features
+- Initial commit with single socket instance with 3 NICs creating vull vnet
+- Added default vales for required parameters
