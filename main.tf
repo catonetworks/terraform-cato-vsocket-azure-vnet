@@ -33,7 +33,6 @@ resource "azurerm_virtual_network" "vnet" {
 resource "azurerm_virtual_network_dns_servers" "dns_servers" {
   virtual_network_id = azurerm_virtual_network.vnet.id
   dns_servers        = var.dns_servers
-
 }
 
 resource "azurerm_subnet" "subnet-mgmt" {
@@ -338,7 +337,7 @@ resource "azurerm_subnet_route_table_association" "rt-table-association-lan" {
 # ## Create Cato SocketSite and Deploy Vsocket
 module "vsocket-azure" {
   source                          = "catonetworks/vsocket-azure/cato"
-  version                         = ">=0.1.6"
+  version                         = ">= 0.1.6"
   native_network_range            = var.vnet_prefix
   lan_ip                          = var.lan_ip
   location                        = var.az_location
@@ -347,6 +346,7 @@ module "vsocket-azure" {
   wan_nic_name                    = azurerm_network_interface.wan-nic.name
   lan_nic_name                    = azurerm_network_interface.lan-nic.name
   site_name                       = var.site_name
+  vm_size                         = var.vm_size
   site_description                = var.site_description
   site_type                       = var.site_type
   site_location                   = var.site_location

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.13 (2026-09-02)
+
+### Changed
+- Pass `vm_size` through to the vsocket-azure module (was previously declared but unused)
+- Refactored `site_location_azure.tf` region mapping to use `country_code`/`state_code`/IANA timezones instead of the `cato_siteLocation` data source
+- Added `azurerm_virtual_network_name` output
+- Bumped `cato` provider requirement to `~> 0.0.93`
+
 ## 0.0.12 (2026-05-06)
 
 ### Changed

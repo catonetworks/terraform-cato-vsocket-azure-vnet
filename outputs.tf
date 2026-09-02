@@ -1,5 +1,6 @@
 ##The following attributes are exported:
 
+output "azurerm_virtual_network_name" { value = azurerm_virtual_network.vnet.name }
 output "azurerm_virtual_network_id" { value = azurerm_virtual_network.vnet.id }
 output "azurerm_availability_set" { value = azurerm_availability_set.availability-set.id }
 output "lan_sg_id" { value = azurerm_network_security_group.lan-sg.id }
